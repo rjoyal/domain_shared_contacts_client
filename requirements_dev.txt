@@ -9,4 +9,4 @@ Sphinx==1.5.2
 cryptography==1.7.1
 PyYAML==3.12
 google-api-python-client
-xmltodict
+xmltodict==0.10.2
