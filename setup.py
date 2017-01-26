@@ -10,7 +10,7 @@ with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
 requirements = [
-    'Click>=6.0',
+    'Click>=6.0', 'gdata', 'oauth2client',
     # TODO: put package requirements here
 ]
 
