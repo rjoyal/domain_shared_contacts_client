@@ -5,6 +5,17 @@ Installation
 ============
 
 
+Prerequisite
+------------
+
+Install gdata-python-client.
+
+.. code-block:: console
+
+    $ git clone git@github.com:google/gdata-python-client.git
+    $ cd gdata-python-client
+    $ python setup.py install
+
 Stable release
 --------------
 
