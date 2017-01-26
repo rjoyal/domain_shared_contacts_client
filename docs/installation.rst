@@ -8,7 +8,7 @@ Installation
 Prerequisite
 ------------
 
-One requirement is not available through `pip install`. Please install gdata-python-client.
+Install gdata-python-client.
 
 .. code-block:: console
 
