@@ -1,0 +1,29 @@
+{
+  "name": {
+    "given_name": "John",
+    "family_name": "Doe",
+    "full_name": "John Doe"
+  },
+  "email": [
+    {
+      "address": "jdoe@somewhere.com",
+      "primary": "true"
+    }
+  ],
+  "phone_number": [
+    {
+      "text": "(888)555-1212",
+      "primary": "true"
+    }
+  ],
+  "structured_postal_address": [
+    {
+      "street": "1 Example St.",
+      "city": "Springfield",
+      "region": "IL",
+      "postcode": "62701",
+      "country": "United States",
+      "primary": "true"
+    }
+  ]
+}
