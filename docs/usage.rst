@@ -29,13 +29,13 @@ Use Google Domain Shared Contacts Client in a project to list, create, read, upd
         "email": [
             {
                 "address": "jdoe@somewhere.com",
-                "primary": "true"
+                "primary": true
             }
         ],
         "phone_number": [
             {
                 "text": "(888)555-1212",
-                "primary": "true"
+                "primary": true
             }
         ],
         "structured_postal_address": [
@@ -45,7 +45,7 @@ Use Google Domain Shared Contacts Client in a project to list, create, read, upd
                 "region": "IL",
                 "postcode": "62701",
                 "country": "United States",
-                "primary": "true"
+                "primary": true
             }
         ]
     }
