@@ -2,16 +2,57 @@
 Usage
 =====
 
-An example of how to use Google Domain Shared Contacts Client in a project to retrieve a list of contacts::
+
+Use Google Domain Shared Contacts Client in a project to list, create, read, update and delete contacts::
 
     import domain_shared_contacts_client
     import json
+    
+    # Create the client. Authenticates to the Google Data API using the service account credentials provided
     client = domain_shared_contacts_client.Client(
         domain='example.com', 
         admin='admin@example.com', 
         credentials='/path/to/credentials.json')
+    
+    # Fetch the list of contacts currently available
     contacts = client.get_contacts()
     print json.dumps(contacts)
+    
+    """
+    Example new_contact.json
+    {
+        "name": {
+            "given_name": "John",
+            "family_name": "Doe",
+            "full_name": "John Doe"
+        },
+        "email": [
+            {
+                "address": "jdoe@somewhere.com",
+                "primary": "true"
+            }
+        ],
+        "phone_number": [
+            {
+                "text": "(888)555-1212",
+                "primary": "true"
+            }
+        ],
+        "structured_postal_address": [
+            {
+                "street": "1 Example St.",
+                "city": "Springfield",
+                "region": "IL",
+                "postcode": "62701",
+                "country": "United States",
+                "primary": "true"
+            }
+        ]
+    }
+    """
+    saved_contact = client.create_contact('/path/to/new_contact.json')
+    print json.dumps(saved_contact)
+
 
 This package assumes the following:
 
