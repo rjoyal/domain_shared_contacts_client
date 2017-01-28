@@ -16,8 +16,7 @@ Use Google Domain Shared Contacts Client in a project to list, create, read, upd
     
     # Fetch the list of contacts currently available
     contacts = client.get_contacts()
-    print json.dumps(contacts)
-
+    print json.dumps(contacts, default=contacts_helper.convert_contacts)
 
 Example new_contact.json::
 
@@ -57,6 +56,10 @@ Create a new contact::
     saved_contact = client.create_contact('/path/to/new_contact.json')
     print json.dumps(saved_contact)
 
+Read a contact::
+
+    contact = client.read_contact(saved_contact['id'])
+    print json.dumps(contact, default=contacts_helper.convert_contact)
 
 This package assumes the following:
 
