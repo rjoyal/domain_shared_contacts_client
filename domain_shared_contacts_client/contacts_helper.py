@@ -4,7 +4,11 @@ import gdata.data
 
 
 def convert_address(entry):
-    """ Handle list of structured postal addresses """
+    """
+    Handle list of structured postal addresses
+    :param entry:
+    :return:
+    """
     address_list = []
     for address in entry.structured_postal_address:
         address_list.append({
@@ -20,7 +24,11 @@ def convert_address(entry):
 
 
 def convert_email(entry):
-    """ Handle list of email addresses """
+    """
+    Handle list of email addresses
+    :param entry:
+    :return:
+    """
     email_list = []
     for email in entry.email:
         email_list.append({
@@ -32,7 +40,11 @@ def convert_email(entry):
 
 
 def convert_phone_number(entry):
-    """ Handle list of phone numbers """
+    """
+    Handle list of phone numbers
+    :param entry:
+    :return:
+    """
     phone_list = []
     for phone in entry.phone_number:
         phone_list.append({
@@ -44,7 +56,11 @@ def convert_phone_number(entry):
 
 
 def convert_contacts(o):
-    """ Convert the list of ContactEntry objects into a JSON serializable object """
+    """
+    Convert the list of ContactEntry objects into a JSON serializable object
+    :param o:
+    :return:
+    """
     new_contacts = []
     for i, entry in enumerate(o.entry):
         new_entry = {
@@ -65,7 +81,11 @@ def convert_contacts(o):
 
 
 def convert_contact(entry):
-    """ Convert a single ContactEntry object into a JSON serializable object """
+    """
+    Convert a single ContactEntry object into a JSON serializable object
+    :param entry:
+    :return:
+    """
     new_entry = {
         'id': entry.id.text,
         'title': entry.title.text,
@@ -82,6 +102,11 @@ def convert_contact(entry):
 
 
 def create_contact_entry(contact_object):
+    """
+    Create a ContactEntry object given the dictionary in contact_object
+    :param contact_object:
+    :return:
+    """
     new_contact = gdata.contacts.data.ContactEntry()
     new_contact.name = gdata.data.Name(
         given_name=gdata.data.GivenName(text=contact_object['name']['given_name']),
@@ -93,8 +118,7 @@ def create_contact_entry(contact_object):
             address=email['address'],
             primary=email['primary'],
             # TODO support different address types
-            rel=gdata.data.WORK_REL,
-            display_name=contact_object['name']['full_name']
+            rel=gdata.data.WORK_REL
         ))
     for phone_number in contact_object['phone_number']:
         new_contact.phone_number.append(gdata.data.PhoneNumber(
@@ -114,3 +138,57 @@ def create_contact_entry(contact_object):
         ))
 
     return new_contact
+
+
+def update_contact_entry(contact, contact_updates):
+    """
+    Update a contact entry with attributes passed in the contact_updates dictionary. Attributes like 'email' and
+    'phone_number' that are lists are replaced with the contents of the list provided in the json data. If you want to
+    add additional email addresses, for instance, pass the original email addresses along with any new ones together
+    in the 'email' attribute of contact_updates.
+    :param contact:
+    :param contact_updates:
+    :return:
+    """
+
+    if 'name' in contact_updates:
+        if 'given_name' in contact_updates['name']:
+            contact.name.given_name.text = contact_updates['name']['given_name']
+        if 'family_name' in contact_updates['name']:
+            contact.name.family_name.text = contact_updates['name']['family_name']
+        if 'full_name' in contact_updates['name']:
+            contact.name.full_name.text = contact_updates['name']['full_name']
+
+    if 'email' in contact_updates:
+        contact.email = []
+        for email in contact_updates['email']:
+            contact.email.append(gdata.data.Email(
+                address=email['address'],
+                primary=email['primary'],
+                # TODO support different address types
+                rel=gdata.data.WORK_REL
+            ))
+
+    if 'phone_number' in contact_updates:
+        contact.phone_number = []
+        for phone_number in contact_updates['phone_number']:
+            contact.phone_number.append(gdata.data.PhoneNumber(
+                text=phone_number['text'],
+                rel=gdata.data.WORK_REL,
+                primary=phone_number['primary']
+            ))
+
+    if 'structured_postal_address' in contact_updates:
+        contact.structured_postal_address = []
+        for structured_postal_address in contact_updates['structured_postal_address']:
+            contact.structured_postal_address.append(gdata.data.StructuredPostalAddress(
+                rel=gdata.data.WORK_REL,
+                primary=structured_postal_address['primary'],
+                street=gdata.data.Street(text=structured_postal_address['street']),
+                city=gdata.data.City(text=structured_postal_address['city']),
+                region=gdata.data.Region(text=structured_postal_address['region']),
+                postcode=gdata.data.Postcode(text=structured_postal_address['postcode']),
+                country=gdata.data.Country(text=structured_postal_address['country'])
+            ))
+
+    return contact

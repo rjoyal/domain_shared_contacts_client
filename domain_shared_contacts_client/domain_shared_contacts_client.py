@@ -36,7 +36,10 @@ class Client:
         self.gd_client = self.create_gd_client()
 
     def create_gd_client(self):
-        """ Build a Google Data API client """
+        """
+        Build a Google Data API client
+        :return:
+        """
         scopes = ['http://www.google.com/m8/feeds/contacts/']
         sa_credentials = ServiceAccountCredentials.from_json_keyfile_name(
             self.credentials, scopes=scopes)
@@ -46,12 +49,19 @@ class Client:
         return gd_client
 
     def get_contacts(self):
-        """ Fetch the list of shared contacts for the domain """
+        """
+        Fetch the list of shared contacts for the domain
+        :return:
+        """
         contacts = self.gd_client.get_contacts(uri='https://www.google.com/m8/feeds/contacts/%s/full' % self.domain)
         return contacts
 
     def create_contact(self, json_data):
-        """ Create a new contact from json data """
+        """
+        Create a new contact from json data
+        :param json_data:
+        :return:
+        """
         if json_data is None:
             raise ValueError('No path provided to a JSON file in the json_data parameter')
         contact_object = json.load(open(json_data))
@@ -62,19 +72,41 @@ class Client:
         saved_contact = {'id': contact_entry.id.text}
         return saved_contact
 
-    def read_contact(self, id):
-        """ Fetch a contact from the API """
-        contact = self.gd_client.GetContact(uri=id)
+    def read_contact(self, contact_id):
+        """
+        Fetch a contact from the API
+        :param contact_id:
+        :return:
+        """
+        contact = self.gd_client.GetContact(uri=contact_id)
         return contact
 
-    def update_contact(self, contact_id):
-        """ Update a contact """
-        pass
+    def update_contact(self, contact_id, json_data):
+        """
+        Update a contact
+        :param contact_id:
+        :param json_data:
+        :return:
+        """
+        try:
+            contact = self.read_contact(contact_id)
+            contact_updates = json.load(open(json_data))
+            new_contact = contacts_helper.update_contact_entry(contact, contact_updates)
+            updated_contact = self.gd_client.Update(new_contact)
+            return updated_contact
+        except gdata.client.RequestError as e:
+            if e.status == 404:
+                return {'status': 'Error', 'details': 'Could not find a contact with id %s.' % contact_id}
+            elif e.status == 412:
+                # Throw an error if there was a conflict
+                return {'status': 'Error', 'details': 'There was a conflict updating %s please try again.' % contact_id}
 
     def delete_contact(self, contact_id):
         """
         Delete a contact. Fetches the contact first to ensure that the contact exists. Fetched
         contact includes an Etag to ensure there are no conflicts with the deletion.
+        :param contact_id:
+        :return:
         """
         # Retrieving the contact is required in order to get the Etag.
         try:
@@ -83,8 +115,7 @@ class Client:
             return {'status': 'OK'}
         except gdata.client.RequestError as e:
             if e.status == 404:
-                return {'status': 'Error', 'details': 'Could not find a contact with id %s.' % id}
+                return {'status': 'Error', 'details': 'Could not find a contact with id %s.' % contact_id}
             elif e.status == 412:
                 # Throw an error if there was a conflict
-                return {'status': 'Error', 'details': 'There was a conflict deleting %s please try again.' % id}
-
+                return {'status': 'Error', 'details': 'There was a conflict deleting %s please try again.' % contact_id}

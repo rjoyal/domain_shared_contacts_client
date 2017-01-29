@@ -1,0 +1,16 @@
+{
+  "name": {
+    "given_name": "Joe",
+    "full_name": "Joe Doe"
+  },
+  "email": [
+    {
+      "address": "jdoe@somewhereelse.com",
+      "primary": "true"
+    },
+    {
+      "address": "jdoe@somewhere.com",
+      "primary": "false"
+    }
+  ]
+}

@@ -56,6 +56,8 @@ def main(domain, admin, credentials, action, contact_details, id):
         print(json.dumps(contacts, default=contacts_helper.convert_contacts,
                          sort_keys=True, indent=4))
     elif action == 'create':
+        if contact_details is None:
+            raise click.UsageError('Please provide contact_details')
         saved_contact = client.create_contact(contact_details)
         print(json.dumps(saved_contact))
     elif action == 'read':
@@ -63,7 +65,11 @@ def main(domain, admin, credentials, action, contact_details, id):
         print(json.dumps(contact, default=contacts_helper.convert_contact,
                          sort_keys=True, indent=4))
     elif action == 'update':
-        client.update_contact(id)
+        if contact_details is None:
+            raise click.UsageError('Please provide contact_details')
+        contact = client.update_contact(id, contact_details)
+        print(json.dumps(contact, default=contacts_helper.convert_contact,
+                         sort_keys=True, indent=4))
     elif action == 'delete':
         result = client.delete_contact(id)
         print(json.dumps(result))

@@ -61,6 +61,31 @@ Read a contact::
     contact = client.read_contact(saved_contact['id'])
     print json.dumps(contact, default=contacts_helper.convert_contact)
 
+Example update_contact.json::
+
+    {
+        "name": {
+            "given_name": "Joe",
+            "full_name": "Joe Doe"
+        },
+        "email": [
+            {
+                "address": "jdoe@somewhereelse.com",
+                "primary": "true"
+            },
+            {
+                "address": "jdoe@somewhere.com",
+                "primary": "false"
+            }
+        ]
+    }
+
+
+Update a contact::
+
+    contact = client.update_contact(saved_contact['id'], '/path/to/updated_contact.json')
+    print json.dumps(contact, default=contacts_helper.convert_contact)
+
 Delete a contact::
 
     result = client.delete_contact(saved_contact['id'])
