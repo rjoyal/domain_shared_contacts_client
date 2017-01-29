@@ -61,6 +61,11 @@ Read a contact::
     contact = client.read_contact(saved_contact['id'])
     print json.dumps(contact, default=contacts_helper.convert_contact)
 
+Delete a contact::
+
+    result = client.delete_contact(saved_contact['id'])
+    print json.dumps(result)
+
 This package assumes the following:
 
 - You have a Google Apps domain account
