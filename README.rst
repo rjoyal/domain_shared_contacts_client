@@ -21,32 +21,50 @@ Google Domain Shared Contacts Client
 A Python client to CRUD Google Domain Shared Contacts
 
 
-* Free software: MIT license
-* Documentation: https://domain-shared-contacts-client.readthedocs.io.
+- Free software: MIT license
+- Documentation: https://domain-shared-contacts-client.readthedocs.io.
 
 
 Features
 --------
 
-* Command-line client and Python library
-* List, create, read, update and delete basic information for Google Domain Shared Contacts
-    * name
-        * given_name
-        * family_name
-        * full_name
-    * email (list)
-        * address
-        * primary
-    * phone_number (list)
-        * text
-        * primary
-    * structured_postal_address (list)
-        * street
-        * city
-        * region
-        * postcode
-        * country
-        * primary
+- Command-line client and Python library::
+
+    $ pip install domain_shared_contacts_client
+    $ domain_shared_contacts_client --help
+    Usage: domain_shared_contacts_client [OPTIONS]
+
+      Console script for domain_shared_contacts_client
+
+    Options:
+      --domain TEXT           Your Google Apps domain (e.g. example.com
+      --admin TEXT            Your domain admin account email (e.g.
+                              admin@example.com)
+      --credentials TEXT      JSON credentials for your service account
+      --action TEXT           One of the following actions: list, create, read,
+                              update, delete
+      --contact_details TEXT  A JSON file containing a new contact record
+      --id TEXT               The ID of a contact to read, update or delete
+      --help                  Show this message and exit.
+
+- List, create, read, update and delete basic information for Google Domain Shared Contacts
+    - name
+        - given_name
+        - family_name
+        - full_name
+    - email (list)
+        - address
+        - primary
+    - phone_number (list)
+        - text
+        - primary
+    - structured_postal_address (list)
+        - street
+        - city
+        - region
+        - postcode
+        - country
+        - primary
 
 Limitations
 -----------
