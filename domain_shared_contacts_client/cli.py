@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 
-import click
-import os.path
-import domain_shared_contacts_client
 import json
-import contacts_helper
+import os.path
 
-actions = {'list', 'create', 'read', 'update', 'delete'}
+import click
+
+import contacts_helper
+import domain_shared_contacts_client
+
+actions = ['list', 'create', 'read', 'update', 'delete']
 
 
 def validate_file(ctx, param, value):
@@ -51,20 +53,20 @@ def main(domain, admin, credentials, action, contact_details, id):
                                                   credentials=credentials)
     if action == 'list':
         contacts = client.get_contacts()
-        print json.dumps(contacts, default=contacts_helper.convert_contacts,
-                         sort_keys=True, indent=4)
+        print(json.dumps(contacts, default=contacts_helper.convert_contacts,
+                         sort_keys=True, indent=4))
     elif action == 'create':
         saved_contact = client.create_contact(contact_details)
-        print json.dumps(saved_contact)
+        print(json.dumps(saved_contact))
     elif action == 'read':
         contact = client.read_contact(id)
-        print json.dumps(contact, default=contacts_helper.convert_contact,
-                         sort_keys=True, indent=4)
+        print(json.dumps(contact, default=contacts_helper.convert_contact,
+                         sort_keys=True, indent=4))
     elif action == 'update':
         client.update_contact(id)
     elif action == 'delete':
         result = client.delete_contact(id)
-        print json.dumps(result)
+        print(json.dumps(result))
 
 
 if __name__ == "__main__":
