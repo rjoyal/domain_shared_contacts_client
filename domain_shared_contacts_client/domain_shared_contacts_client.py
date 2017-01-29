@@ -4,6 +4,7 @@ import gdata.contacts.client
 import httplib2
 import json
 import contacts_helper
+import gdata.client
 
 
 class TokenFromOAuth2Creds:
@@ -68,6 +69,23 @@ class Client:
         """ Update a contact """
         pass
 
-    def delete_contact(self):
-        """ Delete a contact """
-        pass
+    def delete_contact(self, id):
+        """
+        Delete a contact. Fetches the contact first to ensure that the contact exists. Fetched
+        contact includes an Etag to ensure there are no conflicts with the deletion.
+        """
+        # Retrieving the contact is required in order to get the Etag.
+        try:
+            contact = self.read_contact(id)
+        except gdata.client.RequestError, e:
+            if e.status == 404:
+                return {'status': 'Error', 'details': 'Could not find a contact with id %s.' % id}
+
+        try:
+            self.gd_client.Delete(contact)
+            return {'status': 'OK'}
+        except gdata.client.RequestError, e:
+            if e.status == 412:
+                # Throw an error if there was a conflict
+                return {'status': 'Error', 'details': 'There was a conflict deleting %s please try again.' % id}
+

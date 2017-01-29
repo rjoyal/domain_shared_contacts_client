@@ -63,7 +63,8 @@ def main(domain, admin, credentials, action, contact_details, id):
     elif action == 'update':
         client.update_contact(id)
     elif action == 'delete':
-        client.delete_contact(id)
+        result = client.delete_contact(id)
+        print json.dumps(result)
 
 
 if __name__ == "__main__":
