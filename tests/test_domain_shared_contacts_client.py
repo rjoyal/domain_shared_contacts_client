@@ -35,7 +35,7 @@ class TestDomainSharedContactsClient(unittest.TestCase):
         runner = CliRunner()
         result = runner.invoke(cli.main)
         assert result.exit_code == 2
-        assert 'service account credentials are required' in result.output
+        assert 'credentials are required' in result.output
         help_result = runner.invoke(cli.main, ['--help'])
         assert help_result.exit_code == 0
         assert 'domain_shared_contacts_client' in help_result.output

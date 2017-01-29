@@ -18,13 +18,13 @@ def validate_file(ctx, param, value):
         return None
     if not os.path.isfile(value):
         # TODO how to get parameter name in error message
-        raise click.BadParameter('%s should point to a existing file: %s not found' % (param, value))
+        raise click.BadParameter('%s should point to a existing file: %s not found' % (param.human_readable_name, value))
     return value
 
 
 def validate_required_file(ctx, param, value):
     if value is None:
-        raise click.BadParameter('%s are required' % param)
+        raise click.BadParameter('%s are required' % param.human_readable_name)
     return validate_file(ctx, param, value)
 
 
