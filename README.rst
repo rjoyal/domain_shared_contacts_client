@@ -28,7 +28,32 @@ A Python client to CRUD Google Domain Shared Contacts
 Features
 --------
 
-* TODO
+* Command-line client and Python library
+* List, create, read, update and delete basic information for Google Domain Shared Contacts
+    * name
+        * given_name
+        * family_name
+        * full_name
+    * email (list)
+        * address
+        * primary
+    * phone_number (list)
+        * text
+        * primary
+    * structured_postal_address (list)
+        * street
+        * city
+        * region
+        * postcode
+        * country
+        * primary
+
+Limitations
+-----------
+
+* Python 2.7 only
+* Updates a limited set of the ContactEntry attributes
+* Email address, phone number and postal address types are hard-coded to gdata.data.WORK_REL
 
 Credits
 ---------
