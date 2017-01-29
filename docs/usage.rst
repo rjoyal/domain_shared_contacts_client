@@ -18,6 +18,14 @@ Use Google Domain Shared Contacts Client in a project to list, create, read, upd
     contacts = client.get_contacts()
     print json.dumps(contacts, default=contacts_helper.convert_contacts)
 
+Fetch contacts using the CLI::
+
+    $ domain_shared_contacts_client \
+        --domain example.com \
+        --admin admin@example.com \
+        --credentials /path/to/client_secret.json \
+        --action list
+
 Example new_contact.json::
 
     {
@@ -56,10 +64,29 @@ Create a new contact::
     saved_contact = client.create_contact('/path/to/new_contact.json')
     print json.dumps(saved_contact)
 
+Create a new contact using the CLI::
+
+    $ domain_shared_contacts_client \
+        --domain example.com \
+        --admin admin@example.com \
+        --credentials /path/to/client_secret.json \
+        --action create \
+        --contact-details /path/to/new_contact.json
+    {"id": "http://www.google.com/m8/feeds/contacts/example.com/base/2ba2136d0e101978"}
+
 Read a contact::
 
     contact = client.read_contact(saved_contact['id'])
     print json.dumps(contact, default=contacts_helper.convert_contact)
+
+Read a contact using the CLI::
+
+    $ domain_shared_contacts_client \
+        --domain example.com \
+        --admin admin@example.com \
+        --credentials /path/to/client_secret.json \
+        --action read \
+        --id http://www.google.com/m8/feeds/contacts/example.com/base/2ba2136d0e101978
 
 Example update_contact.json::
 
@@ -86,10 +113,30 @@ Update a contact::
     contact = client.update_contact(saved_contact['id'], '/path/to/updated_contact.json')
     print json.dumps(contact, default=contacts_helper.convert_contact)
 
+Update a contact using the CLI::
+
+    $ domain_shared_contacts_client \
+        --domain example.com \
+        --admin admin@example.com \
+        --credentials /path/to/client_secret.json \
+        --action read \
+        --id http://www.google.com/m8/feeds/contacts/example.com/base/2ba2136d0e101978 \
+        --contact-details /path/to/updated_contact.json
+
 Delete a contact::
 
     result = client.delete_contact(saved_contact['id'])
     print json.dumps(result)
+
+Delete a contact using the CLI::
+
+    $ domain_shared_contacts_client 
+        --domain example.com \
+        --admin admin@example.com \
+        --credentials /path/to/client_secret.json \
+        --action delete \
+        --id http://www.google.com/m8/feeds/contacts/example.com/base/2ba2136d0e101978
+    {"status": "OK"}
 
 This package assumes the following:
 
