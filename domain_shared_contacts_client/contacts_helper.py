@@ -3,6 +3,20 @@ import gdata.contacts.data
 import gdata.data
 
 
+def fetch_attribute_text(attr):
+    if attr is None:
+        return ''
+    else:
+        return attr.text
+
+
+def fetch_attribute_boolean(attr):
+    if attr is None:
+        return False
+    else:
+        return attr
+
+
 def convert_address(entry):
     """
     Handle list of structured postal addresses
@@ -12,12 +26,12 @@ def convert_address(entry):
     address_list = []
     for address in entry.structured_postal_address:
         address_list.append({
-            'primary': address.primary,
-            'street': address.street.text,
-            'city': address.city.text,
-            'region': address.region.text,
-            'postcode': address.postcode.text,
-            'country': address.country.text
+            'primary': fetch_attribute_boolean(address.primary),
+            'street': fetch_attribute_text(address.street),
+            'city': fetch_attribute_text(address.city),
+            'region': fetch_attribute_text(address.region),
+            'postcode': fetch_attribute_text(address.postcode),
+            'country': fetch_attribute_text(address.country)
         })
 
     return address_list
@@ -33,7 +47,7 @@ def convert_email(entry):
     for email in entry.email:
         email_list.append({
             'address': email.address,
-            'primary': email.primary
+            'primary': fetch_attribute_boolean(email.primary)
         })
 
     return email_list
@@ -48,8 +62,8 @@ def convert_phone_number(entry):
     phone_list = []
     for phone in entry.phone_number:
         phone_list.append({
-            'text': phone.text,
-            'primary': phone.primary
+            'text': fetch_attribute_text(phone),
+            'primary': fetch_attribute_boolean(phone.primary)
         })
 
     return phone_list
@@ -64,12 +78,12 @@ def convert_contacts(o):
     new_contacts = []
     for i, entry in enumerate(o.entry):
         new_entry = {
-            'id': entry.id.text,
-            'title': entry.title.text,
+            'id': fetch_attribute_text(entry.id),
+            'title': fetch_attribute_text(entry.title),
             'name': {
-                'given_name': entry.name.given_name.text,
-                'family_name': entry.name.family_name.text,
-                'full_name': entry.name.full_name.text
+                'given_name': fetch_attribute_text(entry.name.given_name),
+                'family_name': fetch_attribute_text(entry.name.family_name),
+                'full_name': fetch_attribute_text(entry.name.full_name)
             },
             'email': convert_email(entry),
             'phone_number': convert_phone_number(entry),
@@ -87,12 +101,12 @@ def convert_contact(entry):
     :return:
     """
     new_entry = {
-        'id': entry.id.text,
-        'title': entry.title.text,
+        'id': fetch_attribute_text(entry.id),
+        'title': fetch_attribute_text(entry.title),
         'name': {
-            'given_name': entry.name.given_name.text,
-            'family_name': entry.name.family_name.text,
-            'full_name': entry.name.full_name.text
+            'given_name': fetch_attribute_text(entry.name.given_name),
+            'family_name': fetch_attribute_text(entry.name.family_name),
+            'full_name': fetch_attribute_text(entry.name.full_name)
         },
         'email': convert_email(entry),
         'phone_number': convert_phone_number(entry),
