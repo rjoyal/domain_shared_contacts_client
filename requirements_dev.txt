@@ -1,4 +1,4 @@
-appdirs==1.4.0
+appdirs==1.4.3
 click==6.7
 gdata==2.0.18
 httplib2==0.10.2
