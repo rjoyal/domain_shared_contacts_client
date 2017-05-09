@@ -40,6 +40,13 @@ Example new_contact.json::
                 "primary": "true"
             }
         ],
+        "organization": {
+            "name": "Example Pty Ltd",
+            "title": "Senior Manager",
+            "job_description": "Manage development activities",
+            "department": "Software Engineering",
+            "symbol": "EXPL"
+        },
         "phone_number": [
             {
                 "text": "(888)555-1212",
