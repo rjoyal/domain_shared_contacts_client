@@ -34,6 +34,7 @@ def convert_organization(organization):
     organization = {
         key: fetch_attribute_text(getattr(organization, key))
         for key, cls in GD_ORGANIZATION
+        if getattr(organization, key, None)
     }
     return organization
 
@@ -147,7 +148,7 @@ def create_organization(organization_object):
     new_organization = gdata.data.Organization(label=gdata.data.WORK_REL)
 
     for key, cls in GD_ORGANIZATION:
-        if key in organization_object:
+        if key in organization_object and organization_object[key]:
             setattr(new_organization, key, cls(organization_object[key]))
 
     return new_organization
