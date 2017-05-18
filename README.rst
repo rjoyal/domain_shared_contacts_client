@@ -52,6 +52,12 @@ Features
         - given_name
         - family_name
         - full_name
+    - organization
+        - name
+        - department
+        - title
+        - job_description
+        - symbol
     - email (list)
         - address
         - primary

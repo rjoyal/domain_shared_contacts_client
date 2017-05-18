@@ -9,7 +9,6 @@ deploy:
     repo: rjoyal/domain_shared_contacts_client
 env:
 - TOXENV=py27
-- TOXENV=py26
 - TOXENV=pypy
 install: pip install -U tox
 language: python
