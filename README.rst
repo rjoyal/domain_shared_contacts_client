@@ -32,26 +32,32 @@ Features
 
     $ pip install domain_shared_contacts_client
     $ domain_shared_contacts_client --help
-    Usage: domain_shared_contacts_client [OPTIONS]
+    Usage: domain_shared_contacts_client [OPTIONS] DOMAIN ADMIN CREDENTIALS
+                                         COMMAND [ARGS]...
 
-      Console script for domain_shared_contacts_client
+      Command line utility to interact with the Shared Contacts API.
 
     Options:
-      --domain TEXT           Your Google Apps domain (e.g. example.com
-      --admin TEXT            Your domain admin account email (e.g.
-                              admin@example.com)
-      --credentials TEXT      JSON credentials for your service account
-      --action TEXT           One of the following actions: list, create, read,
-                              update, delete
-      --contact_details TEXT  A JSON file containing a new contact record
-      --id TEXT               The ID of a contact to read, update or delete
-      --help                  Show this message and exit.
+      --help  Show this message and exit.
+
+    Commands:
+      create  a single contact
+      delete  a single contact
+      list    all contacts
+      read    a single contact
+      update  a single contact
 
 - List, create, read, update and delete basic information for Google Domain Shared Contacts
     - name
         - given_name
         - family_name
         - full_name
+    - organization
+        - name
+        - department
+        - title
+        - job_description
+        - symbol
     - email (list)
         - address
         - primary

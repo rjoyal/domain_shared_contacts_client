@@ -21,10 +21,10 @@ Use Google Domain Shared Contacts Client in a project to list, create, read, upd
 Fetch contacts using the CLI::
 
     $ domain_shared_contacts_client \
-        --domain example.com \
-        --admin admin@example.com \
-        --credentials /path/to/client_secret.json \
-        --action list
+        example.com \
+        admin@example.com \
+        /path/to/client_secret.json \
+        list
 
 Example new_contact.json::
 
@@ -40,6 +40,13 @@ Example new_contact.json::
                 "primary": "true"
             }
         ],
+        "organization": {
+            "name": "Example Pty Ltd",
+            "title": "Senior Manager",
+            "job_description": "Manage development activities",
+            "department": "Software Engineering",
+            "symbol": "EXPL"
+        },
         "phone_number": [
             {
                 "text": "(888)555-1212",
@@ -67,11 +74,10 @@ Create a new contact::
 Create a new contact using the CLI::
 
     $ domain_shared_contacts_client \
-        --domain example.com \
-        --admin admin@example.com \
-        --credentials /path/to/client_secret.json \
-        --action create \
-        --contact-details /path/to/new_contact.json
+        example.com \
+        admin@example.com \
+        /path/to/client_secret.json \
+        create /path/to/new_contact.json
     {"id": "http://www.google.com/m8/feeds/contacts/example.com/base/2ba2136d0e101978"}
 
 Read a contact::
@@ -82,11 +88,10 @@ Read a contact::
 Read a contact using the CLI::
 
     $ domain_shared_contacts_client \
-        --domain example.com \
-        --admin admin@example.com \
-        --credentials /path/to/client_secret.json \
-        --action read \
-        --id http://www.google.com/m8/feeds/contacts/example.com/base/2ba2136d0e101978
+        example.com \
+        admin@example.com \
+        /path/to/client_secret.json \
+        read 2ba2136d0e101978
 
 Example update_contact.json::
 
@@ -116,12 +121,10 @@ Update a contact::
 Update a contact using the CLI::
 
     $ domain_shared_contacts_client \
-        --domain example.com \
-        --admin admin@example.com \
-        --credentials /path/to/client_secret.json \
-        --action read \
-        --id http://www.google.com/m8/feeds/contacts/example.com/base/2ba2136d0e101978 \
-        --contact-details /path/to/updated_contact.json
+        example.com \
+        admin@example.com \
+        /path/to/client_secret.json \
+        update /path/to/updated_contact.json
 
 Delete a contact::
 
@@ -130,12 +133,11 @@ Delete a contact::
 
 Delete a contact using the CLI::
 
-    $ domain_shared_contacts_client 
-        --domain example.com \
-        --admin admin@example.com \
-        --credentials /path/to/client_secret.json \
-        --action delete \
-        --id http://www.google.com/m8/feeds/contacts/example.com/base/2ba2136d0e101978
+    $ domain_shared_contacts_client
+        example.com \
+        admin@example.com \
+        /path/to/client_secret.json \
+        delete 2ba2136d0e101978
     {"status": "OK"}
 
 This package assumes the following:

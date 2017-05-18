@@ -2,6 +2,14 @@
 import gdata.contacts.data
 import gdata.data
 
+GD_ORGANIZATION = (
+    ('department', gdata.data.OrgDepartment),
+    ('job_description', gdata.data.OrgJobDescription),
+    ('name', gdata.data.OrgName),
+    ('symbol', gdata.data.OrgSymbol),
+    ('title', gdata.data.OrgTitle),
+)
+
 
 def fetch_attribute_text(attr):
     if attr is None:
@@ -15,6 +23,20 @@ def fetch_attribute_boolean(attr):
         return False
     else:
         return attr
+
+
+def convert_organization(organization):
+    """
+    Handle organization
+    :param entry:
+    :return:
+    """
+    organization = {
+        key: fetch_attribute_text(getattr(organization, key))
+        for key, cls in GD_ORGANIZATION
+        if getattr(organization, key, None)
+    }
+    return organization
 
 
 def convert_address(entry):
@@ -85,6 +107,7 @@ def convert_contacts(o):
                 'family_name': fetch_attribute_text(entry.name.family_name),
                 'full_name': fetch_attribute_text(entry.name.full_name)
             },
+            'organization': convert_organization(entry.organization),
             'email': convert_email(entry),
             'phone_number': convert_phone_number(entry),
             'structured_postal_address': convert_address(entry)
@@ -108,11 +131,27 @@ def convert_contact(entry):
             'family_name': fetch_attribute_text(entry.name.family_name),
             'full_name': fetch_attribute_text(entry.name.full_name)
         },
+        'organization': convert_organization(entry.organization),
         'email': convert_email(entry),
         'phone_number': convert_phone_number(entry),
         'structured_postal_address': convert_address(entry)
     }
     return new_entry
+
+
+def create_organization(organization_object):
+    """
+    Create an Organization object given the dictionary in organization_object
+    :param organization_object:
+    :return:
+    """
+    new_organization = gdata.data.Organization(label=gdata.data.WORK_REL)
+
+    for key, cls in GD_ORGANIZATION:
+        if key in organization_object and organization_object[key]:
+            setattr(new_organization, key, cls(organization_object[key]))
+
+    return new_organization
 
 
 def create_contact_entry(contact_object):
@@ -127,6 +166,7 @@ def create_contact_entry(contact_object):
         family_name=gdata.data.FamilyName(text=contact_object['name']['family_name']),
         full_name=gdata.data.FullName(text=contact_object['name']['full_name'])
     )
+    new_contact.organization = create_organization(contact_object['organization'])
     for email in contact_object['email']:
         new_contact.email.append(gdata.data.Email(
             address=email['address'],
@@ -164,6 +204,9 @@ def update_contact_entry(contact, contact_updates):
     :param contact_updates:
     :return:
     """
+    if 'organization' in contact_updates:
+        organization = contact_updates['organization']
+        contact.organization = create_organization(organization)
 
     if 'name' in contact_updates:
         if 'given_name' in contact_updates['name']:
