@@ -1,5 +1,5 @@
 appdirs==1.4.3
-click==6.7
+click==7.0
 gdata==2.0.18
 httplib2==0.11.3
 oauth2client==4.1.2
