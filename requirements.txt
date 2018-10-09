@@ -7,5 +7,5 @@ packaging==17.1
 pyasn1==0.4.4
 pyasn1-modules==0.2.2
 pyparsing==2.2.1
-rsa==3.4.2
+rsa==4.0
 six==1.11.0
