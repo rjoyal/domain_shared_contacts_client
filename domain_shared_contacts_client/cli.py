@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import json
-import os.path
 
 import click
 import contacts_helper
@@ -20,7 +19,7 @@ def cli(ctx, domain, admin, credentials):
     ctx.obj['domain'] = domain
     ctx.obj['admin'] = admin
     ctx.obj['credentials'] = credentials
-
+    ctx.obj['name'] = 'root'
 
 @cli.command()
 @click.option('--indent', '-i', type=int, default=None)

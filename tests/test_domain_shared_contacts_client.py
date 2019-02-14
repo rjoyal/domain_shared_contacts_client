@@ -23,5 +23,6 @@ class TestDomainSharedContactsClient(unittest.TestCase):
 
     def test_command_line_interface(self):
         runner = CliRunner()
-        result = runner.invoke(cli.main)
-        self.assertEqual(result.exit_code, -1)
+        result = runner.invoke(cli.cli)
+        # I'm assuming that a successful result is what we are looking for below
+        self.assertEqual(result.exit_code, 0)
