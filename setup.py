@@ -20,7 +20,7 @@ test_requirements = [
 
 setup(
     name='domain_shared_contacts_client',
-    version='1.0.4',
+    version='1.0.4.2',
     description="A Python client to CRUD Google Domain Shared Contacts",
     long_description=readme + '\n\n' + history,
     author="Robert Joyal",
