@@ -19,14 +19,14 @@ def cli(ctx, domain, admin, credentials):
     ctx.obj['domain'] = domain
     ctx.obj['admin'] = admin
     ctx.obj['credentials'] = credentials
-    ctx.obj['name'] = 'root'
+
 
 @cli.command()
 @click.option('--indent', '-i', type=int, default=None)
 @click.option('--sort/--no-sort', default=True)
 @click.option('--output', '-o', type=click.File('w'), default='-')
 @click.pass_context
-def list(ctx, indent, sort, output):
+def list_contacts(ctx, indent, sort, output):
     """
     all contacts
     """
